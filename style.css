@@ -75,3 +75,10 @@ main {
     align-items: center;
     justify-content: center;
 }
+
+.field div figure {
+    width: 50%;
+    height: 50%;
+    background-color: rgb(145, 145, 145);
+    border-radius: 8px;
+}

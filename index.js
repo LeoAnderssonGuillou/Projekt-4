@@ -5,6 +5,8 @@
 let grid = new Array(8).fill(0).map(_ => new Array(6).fill({}));
 let shop = new Array(10)
 
+let buyState = -1;
+
 const field = document.querySelector(".field");
 const sidebar = document.querySelector(".sidebar");
 
@@ -23,6 +25,9 @@ function gridSetup() {
     for (let x = 0; x < 8; x++) {
       const cell = document.createElement("div");
       field.appendChild(cell);
+      cell.addEventListener("click", () => {
+        clickField(x, y);
+      });
   
       cell.id = `${x}:${y}`;
       grid[x][y] = cell.id;
@@ -33,18 +38,47 @@ function gridSetup() {
 
 //Fills the sidebar shop with items
 function shopSetup() {
-  const farm = document.createElement("div");
-  farm.innerHTML = "Farm";
-  farm.addEventListener("click", () => {
+  //The farm shop item
+  let farmItem = {
+    element: document.createElement("div"),
+    active: false,
+  };
+  farmItem.element.innerHTML = "Farm";
+  farmItem.element.addEventListener("click", () => {
     clickShopItem(0);
   });
-  shop[0] = farm;
-  sidebar.appendChild(farm);
-
+  shop[0] = farmItem;
+  sidebar.appendChild(farmItem.element);
 }
 
+//When a shop item is clicked on
 function clickShopItem(x) {
-  shop[x].style.backgroundColor = "rgb(145, 145, 145)";
+  if (shop[x].active == false) {
+    shop[x].element.style.backgroundColor = "rgb(145, 145, 145)";
+    buyState = x;
+    shop[x].active = true;
+  }
+  else {
+    shop[x].element.style.backgroundColor = "rgb(172, 172, 172)";
+    buyState = -1;
+    shop[x].active = false;
+  }
+  
+}
+
+//When a field cell is clicked on
+function clickField(x, y) {
+  let cell = document.getElementById(grid[x][y]);
+  switch (buyState) {
+    case -1:
+      console.log("bababooey");
+      break;
+    case 0:
+      const farm = document.createElement("figure");
+      cell.appendChild(farm);
+      
+  }
+  
 }
 
 
