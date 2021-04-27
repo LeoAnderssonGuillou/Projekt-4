@@ -1,17 +1,24 @@
 
 
 
-
+//Arrays
 let grid = new Array(8).fill(0).map(_ => new Array(6).fill({}));
 let shop = new Array(1);
 
+//Other variables
 let buyState = -1;
+let money = 0;
 
+
+//Colors
 const shopColorOff = "rgb(172, 172, 172)";
 const shopColorOn = "rgb(145, 145, 145)";
 
+//Specific elements
 const field = document.querySelector(".field");
 const sidebar = document.querySelector(".sidebar");
+const moneyText = document.querySelector(".moneytext");
+
 
 //Creates CSS for the main field
 function fieldSetup() {
@@ -48,8 +55,9 @@ function shopSetup() {
   let farmItem = {
     element: document.createElement("div"),
     active: false,
+    cost: 100,
   };
-  farmItem.element.innerHTML = "Farm";
+  farmItem.element.innerHTML = "Farm <br> 100";
   farmItem.element.addEventListener("click", () => {
     clickShopItem(0);
   });
@@ -77,11 +85,14 @@ function clickField(x, y) {
         console.log("bababooey");
         break;
       case 0:
-        const farm = document.createElement("figure");
-        cell.element.appendChild(farm);
-        cell.inUse = true;
-        updateShop(-1);
-        
+        if (money > farmItem.cost) {
+          const farm = document.createElement("figure");
+          cell.element.appendChild(farm);
+          cell.inUse = true;
+          updateShop(-1);
+          changeMoney(-farmItem.cost);
+        }
+          
     }
   }
 }
@@ -101,7 +112,18 @@ function updateShop(state) {
   }
 }
 
+function updateMoney(cash) {
+  money = cash;
+  moneyText.innerHTML = "$" + cash;
+}
+
+function changeMoney(cost) {
+  money = money + cost;
+  moneyText.innerHTML = "$" + money;
+}
+
 
 fieldSetup();
 gridSetup();
 shopSetup();
+updateMoney(1000);

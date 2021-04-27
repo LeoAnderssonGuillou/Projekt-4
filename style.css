@@ -18,6 +18,19 @@ body {
 header {
     height: 8vh;
     background-color: gold;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.moneytext {
+    background-color: gold;
+    height: 100%;
+    width: 20vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
 }
 
 footer {
@@ -56,6 +69,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 .field {
