@@ -85,12 +85,12 @@ function clickField(x, y) {
         console.log("bababooey");
         break;
       case 0:
-        if (money > farmItem.cost) {
+        if (money >= shop[0].cost) {
           const farm = document.createElement("figure");
           cell.element.appendChild(farm);
           cell.inUse = true;
           updateShop(-1);
-          changeMoney(-farmItem.cost);
+          changeMoney(-shop[0].cost);
         }
           
     }
@@ -114,7 +114,7 @@ function updateShop(state) {
 
 function updateMoney(cash) {
   money = cash;
-  moneyText.innerHTML = "$" + cash;
+  moneyText.innerHTML = "$" + money;
 }
 
 function changeMoney(cost) {
