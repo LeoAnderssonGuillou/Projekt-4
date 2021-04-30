@@ -4,6 +4,7 @@
 //Arrays
 let grid = new Array(8).fill(0).map(_ => new Array(6).fill({}));
 let shop = new Array(1);
+let farmCells = new Array(1);
 
 //Other variables
 let buyState = -1;
@@ -36,6 +37,7 @@ function gridSetup() {
       let cell = {
         element: document.createElement("div"),
         inUse: false,
+        effect: 0,
       };
       field.appendChild(cell.element);
       cell.element.addEventListener("click", () => {
@@ -56,6 +58,7 @@ function shopSetup() {
     element: document.createElement("div"),
     active: false,
     cost: 100,
+    effect: 10,
   };
   farmItem.element.innerHTML = "Farm <br> 100";
   farmItem.element.addEventListener("click", () => {
@@ -87,10 +90,17 @@ function clickField(x, y) {
       case 0:
         if (money >= shop[0].cost) {
           const farm = document.createElement("figure");
+          const dollarSign = document.createElement("figure");
+          dollarSign.classList.add("dollar");
+          dollarSign.innerText = "$";
+
+          farm.appendChild(dollarSign);
           cell.element.appendChild(farm);
           cell.inUse = true;
+          cell.effect = shop[0].effect;
           updateShop(-1);
           changeMoney(-shop[0].cost);
+          farmCells.push(cell);
         }
           
     }
@@ -122,8 +132,14 @@ function changeMoney(cost) {
   moneyText.innerHTML = "$" + money;
 }
 
-
 fieldSetup();
 gridSetup();
 shopSetup();
 updateMoney(1000);
+setInterval(generateMoney, 1000);
+
+function generateMoney() {
+  for (x in farmCells) {
+   changeMoney(farmCells[x].effect);
+  }
+}
