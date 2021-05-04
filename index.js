@@ -38,6 +38,7 @@ function gridSetup() {
         element: document.createElement("div"),
         inUse: false,
         effect: 0,
+        animation: 0,
       };
       field.appendChild(cell.element);
       cell.element.addEventListener("click", () => {
@@ -89,13 +90,14 @@ function clickField(x, y) {
         break;
       case 0:
         if (money >= shop[0].cost) {
-          const farm = document.createElement("figure");
           const dollarSign = document.createElement("figure");
           dollarSign.classList.add("dollar");
           dollarSign.innerText = "$";
 
+          const farm = document.createElement("figure");
           farm.appendChild(dollarSign);
           cell.element.appendChild(farm);
+          cell.animation = dollarSign;
           cell.inUse = true;
           cell.effect = shop[0].effect;
           updateShop(-1);
@@ -138,8 +140,21 @@ shopSetup();
 updateMoney(1000);
 setInterval(generateMoney, 1000);
 
+//Generates money and plays animation for each farm
+let aniNumber1 = true;
 function generateMoney() {
   for (x in farmCells) {
    changeMoney(farmCells[x].effect);
+   
+   //Animation is repeated by having the element switch between two identical classes with two identical animations
+   if (aniNumber1 == true) {
+    farmCells[x].animation.classList.remove("dollarFading1");
+    farmCells[x].animation.classList.add("dollarFading2");
+   }
+   else {
+    farmCells[x].animation.classList.remove("dollarFading2");
+    farmCells[x].animation.classList.add("dollarFading1");
+   }
   }
+  aniNumber1 = !aniNumber1;
 }
