@@ -52,6 +52,7 @@ function gridSetup() {
   }
 }
 
+
 //Fills the sidebar shop with items
 function shopSetup() {
   //The farm shop item
@@ -67,7 +68,36 @@ function shopSetup() {
   });
   shop[0] = farmItem;
   sidebar.appendChild(farmItem.element);
+
+  //The bank shop item
+  let bankItem = {
+    element: document.createElement("div"),
+    active: false,
+    cost: 500,
+    effect: 20,
+  };
+  bankItem.element.innerHTML = "Bank <br> 500";
+  bankItem.element.addEventListener("click", () => {
+    clickShopItem(1);
+  });
+  shop[1] = bankItem;
+  sidebar.appendChild(bankItem.element);
+
+  //The factory shop item
+  let factoryItem = {
+    element: document.createElement("div"),
+    active: false,
+    cost: 1000,
+    effect: 40,
+  };
+  factoryItem.element.innerHTML = "Factory <br> 1000";
+  factoryItem.element.addEventListener("click", () => {
+    clickShopItem(2);
+  });
+  shop[2] = factoryItem;
+  sidebar.appendChild(factoryItem.element);
 }
+
 
 //When a shop item is clicked on
 function clickShopItem(x) {
@@ -89,23 +119,40 @@ function clickField(x, y) {
         console.log("bababooey");
         break;
       case 0:
-        if (money >= shop[0].cost) {
-          const dollarSign = document.createElement("figure");
-          dollarSign.classList.add("dollar");
-          dollarSign.innerText = "$";
-
-          const farm = document.createElement("figure");
-          farm.appendChild(dollarSign);
-          cell.element.appendChild(farm);
-          cell.animation = dollarSign;
-          cell.inUse = true;
-          cell.effect = shop[0].effect;
-          updateShop(-1);
-          changeMoney(-shop[0].cost);
-          farmCells.push(cell);
-        }
-          
+        placeItem(x, y, 0, "🌾");
+        break;
+      case 1:
+        placeItem(x, y, 1, "🏛️");
+        break; 
+      case 2:
+        placeItem(x, y, 2, "🏭");
+        break;          
     }
+  }
+}
+
+function placeItem(gridX, gridY, shopIndex, symbol) {
+  let cell = grid[gridX][gridY];
+  if (money >= shop[shopIndex].cost) {
+    const dollarSign = document.createElement("figure");
+    dollarSign.classList.add("dollar");
+    dollarSign.innerText = "$" + shop[shopIndex].effect;
+
+    const icon = document.createElement("article");
+    icon.classList.add("icon");
+    icon.innerText = symbol;
+
+    const item = document.createElement("figure");
+    item.classList.add("item");
+    item.appendChild(dollarSign);
+    item.appendChild(icon);
+    cell.element.appendChild(item);
+    cell.animation = dollarSign;
+    cell.inUse = true;
+    cell.effect = shop[shopIndex].effect;
+    updateShop(-1);
+    changeMoney(-shop[shopIndex].cost);
+    farmCells.push(cell);
   }
 }
 
