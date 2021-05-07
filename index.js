@@ -12,8 +12,8 @@ let money = 0;
 
 
 //Colors
-const shopColorOff = "rgb(172, 172, 172)";
-const shopColorOn = "rgb(145, 145, 145)";
+const shopColorOff = "rgb(207, 207, 207)";
+const shopColorOn = "rgb(172, 172, 172)";
 
 //Specific elements
 const field = document.querySelector(".field");
@@ -25,9 +25,9 @@ const moneyText = document.querySelector(".moneytext");
 function fieldSetup() {
   field.style.display = "grid";
   field.style.gridTemplateColumns = new Array(8)
-    .fill("1fr")
+    .fill("minmax(0, 1fr)")
     .join(" ");
-  field.style.gridTemplateRows = new Array(6).fill("1fr").join(" ");
+  field.style.gridTemplateRows = new Array(6).fill("minmax(0, 1fr)").join(" ");
 }
 
 //Creates cells for the main field
@@ -62,7 +62,8 @@ function shopSetup() {
     cost: 100,
     effect: 10,
   };
-  farmItem.element.innerHTML = "Farm <br> 100";
+  farmItem.element.innerHTML = "Farm <br> $100";
+  farmItem.element.classList.add("farm");
   farmItem.element.addEventListener("click", () => {
     clickShopItem(0);
   });
@@ -76,7 +77,7 @@ function shopSetup() {
     cost: 500,
     effect: 20,
   };
-  bankItem.element.innerHTML = "Bank <br> 500";
+  bankItem.element.innerHTML = "Bank <br> $500";
   bankItem.element.addEventListener("click", () => {
     clickShopItem(1);
   });
@@ -88,14 +89,42 @@ function shopSetup() {
     element: document.createElement("div"),
     active: false,
     cost: 1000,
-    effect: 40,
+    effect: 50,
   };
-  factoryItem.element.innerHTML = "Factory <br> 1000";
+  factoryItem.element.innerHTML = "Factory <br> $1000";
   factoryItem.element.addEventListener("click", () => {
     clickShopItem(2);
   });
   shop[2] = factoryItem;
   sidebar.appendChild(factoryItem.element);
+
+  //The corporation shop item
+  let corpItem = {
+    element: document.createElement("div"),
+    active: false,
+    cost: 5000,
+    effect: 100,
+  };
+  corpItem.element.innerHTML = "Corporation <br> $5000";
+  corpItem.element.addEventListener("click", () => {
+    clickShopItem(3);
+  });
+  shop[3] = corpItem;
+  sidebar.appendChild(corpItem.element);
+
+  //The kaaba shop item
+  let kaabaItem = {
+    element: document.createElement("div"),
+    active: false,
+    cost: 10000,
+    effect: 500,
+  };
+  kaabaItem.element.innerHTML = "Kaaba <br> $10,000";
+  kaabaItem.element.addEventListener("click", () => {
+    clickShopItem(4);
+  });
+  shop[4] = kaabaItem;
+  sidebar.appendChild(kaabaItem.element);
 }
 
 
@@ -126,7 +155,13 @@ function clickField(x, y) {
         break; 
       case 2:
         placeItem(x, y, 2, "🏭");
-        break;          
+        break;   
+      case 3:
+        placeItem(x, y, 3, "🏦");
+        break;
+      case 4:
+        placeItem(x, y, 4, "🕋");
+        break;           
     }
   }
 }
@@ -184,7 +219,7 @@ function changeMoney(cost) {
 fieldSetup();
 gridSetup();
 shopSetup();
-updateMoney(1000);
+updateMoney(5000);
 setInterval(generateMoney, 1000);
 
 //Generates money and plays animation for each farm
