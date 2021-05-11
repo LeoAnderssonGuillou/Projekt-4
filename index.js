@@ -75,7 +75,7 @@ function shopSetup() {
     element: document.createElement("div"),
     active: false,
     cost: 500,
-    effect: 20,
+    effect: 50,
   };
   bankItem.element.innerHTML = "Bank <br> $500";
   bankItem.element.addEventListener("click", () => {
@@ -88,10 +88,10 @@ function shopSetup() {
   let factoryItem = {
     element: document.createElement("div"),
     active: false,
-    cost: 1000,
-    effect: 50,
+    cost: 4000,
+    effect: 100,
   };
-  factoryItem.element.innerHTML = "Factory <br> $1000";
+  factoryItem.element.innerHTML = "Factory <br> $4000";
   factoryItem.element.addEventListener("click", () => {
     clickShopItem(2);
   });
@@ -102,10 +102,10 @@ function shopSetup() {
   let corpItem = {
     element: document.createElement("div"),
     active: false,
-    cost: 5000,
-    effect: 100,
+    cost: 15000,
+    effect: 200,
   };
-  corpItem.element.innerHTML = "Corporation <br> $5000";
+  corpItem.element.innerHTML = "Corporation <br> $15,000";
   corpItem.element.addEventListener("click", () => {
     clickShopItem(3);
   });
@@ -116,10 +116,10 @@ function shopSetup() {
   let kaabaItem = {
     element: document.createElement("div"),
     active: false,
-    cost: 10000,
-    effect: 500,
+    cost: 50000,
+    effect: 1000,
   };
-  kaabaItem.element.innerHTML = "Kaaba <br> $10,000";
+  kaabaItem.element.innerHTML = "Kaaba <br> $50,000";
   kaabaItem.element.addEventListener("click", () => {
     clickShopItem(4);
   });
@@ -219,7 +219,7 @@ function changeMoney(cost) {
 fieldSetup();
 gridSetup();
 shopSetup();
-updateMoney(5000);
+updateMoney(150);
 setInterval(generateMoney, 1000);
 
 //Generates money and plays animation for each farm
