@@ -63,7 +63,6 @@ function shopSetup() {
     effect: 10,
   };
   farmItem.element.innerHTML = "Farm <br> $100";
-  farmItem.element.classList.add("farm");
   farmItem.element.addEventListener("click", () => {
     clickShopItem(0);
   });
